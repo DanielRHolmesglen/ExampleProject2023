@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     #region singleton
-    [HideInInspector] public LevelManager instance;
+    [HideInInspector] public static LevelManager instance;
     void Awake()
     {
         if(instance != null)
@@ -23,10 +23,8 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     [Header("Players")]
-    public GameObject player1;
-    public GameObject player2;
-    public Transform player1SpawnPosition;
-    public Transform player2SpawnPosition;
+    public PlayerData[] players;
+    public Transform[] playerSpawns;
 
     [Header("Level Settings")]
     public WaveManager[] waves;
@@ -45,22 +43,28 @@ public class LevelManager : MonoBehaviour
     public UnityEvent OnWon;
     public UnityEvent OnPrepEnd;
 
+    [Header("Attached Components")]
+    public InLevelUIManager UIManager;
     // Start is called before the first frame update
     void Start()
     {
-        timer.StartTimer(0.5f);
+        timer.StartTimer(5f);
         currentState = GameState.Prepping;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(currentState == GameState.Prepping)
+        {
+            UIManager.UpdateUI();
+        }
     }
     public void BeginWave()
     {
         currentState = GameState.InWave;
         waves[currentWave].isActive = true;
+        UIManager.UpdateUI();
     }
     public void EndWave()
     {
@@ -78,5 +82,10 @@ public class LevelManager : MonoBehaviour
     {
         currentState = GameState.Prepping;
         timer.StartTimer(timeBetweenWaves);
+    }
+    public void UpdateScore(int playerNum)
+    {
+        players[playerNum - 1].kills++;
+        UIManager.UpdateUI();
     }
 }

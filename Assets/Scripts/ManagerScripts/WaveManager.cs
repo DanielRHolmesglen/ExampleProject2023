@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 /// <summary>
 /// This script manages spawning enemies for wave, tracking whether the wave is complete, and communicating with the level manager.
 /// </summary>
@@ -12,6 +13,9 @@ public class WaveManager : MonoBehaviour
     [Header("Wave Settings")]
     public int maxNumberAtOnce;
     public int maxNumberOverLifeTime;
+
+    [HideInInspector]
+    public int killed;
 
     List<GameObject> enemiesSpawned = new List<GameObject>();
     List<GameObject> currentEnemiesSpawned = new List<GameObject>();
@@ -35,8 +39,7 @@ public class WaveManager : MonoBehaviour
                 AttemptToSpawn();
                 time = 0;
             }
-        }
-        
+        }       
 
     }
     void AttemptToSpawn()
@@ -47,6 +50,8 @@ public class WaveManager : MonoBehaviour
         if(enemiesSpawned.Count < maxNumberOverLifeTime && currentEnemiesSpawned.Count < maxNumberAtOnce)
         {
             GameObject currentEnemy = Instantiate(enemyTypes[enemyNum], spawnPoints[spawnPos].position, Quaternion.identity);
+           // currentEnemy.GetComponent<SimpleEnemyAI>().target = LevelManager.instance.player1.transform;
+            currentEnemy.GetComponent<EnemyFromSpawner>().manager = this;
             enemiesSpawned.Add(currentEnemy);
             currentEnemiesSpawned.Add(currentEnemy);
         }
@@ -54,13 +59,18 @@ public class WaveManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        foreach(Transform point in spawnPoints)
+        if(spawnPoints.Length > 0)
         {
-            Gizmos.DrawSphere(point.position, 0.2f);
+            foreach (Transform point in spawnPoints)
+            {
+                Gizmos.DrawSphere(point.position, 0.2f);
+            }
         }
+        
     }
     public void KillEnemy(GameObject enemy)
     {
+        killed++;
         currentEnemiesSpawned.Remove(enemy);
         if(currentEnemiesSpawned.Count == 0 && enemiesSpawned.Count >= maxNumberOverLifeTime)
         {
