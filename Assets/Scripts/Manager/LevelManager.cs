@@ -55,7 +55,11 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UI update   
+        //UI update
+        if(currentState == GameStates.Prepping)
+        {
+            UIManager.UpdateUI();
+        }
     }
     //run a timer between waves for a prep time
     public void StartPrep()
@@ -68,26 +72,40 @@ public class LevelManager : MonoBehaviour
     {
         currentState = GameStates.InWave;
         waves[currentWave].isActive = true;
-        //UI update
+        UIManager.UpdateUI();
     }
     //Track player deaths and run game over
 
     //track waves completed and run victory
     public void EndWave()
     {
-        currentWave++;
+        
         if(currentWave < waves.Length)
         {
+            currentWave++;
             StartPrep();
         }
         else
         {
             currentState = GameStates.Won;
+            UIManager.EndGameUI();
         }
     }
     //process score and update the other scripts
     public void PlayerDeath(int playerNumber)
     {
-
+        bool anyAlive = false;
+        foreach(PlayerData player in players)
+        {
+            if(player.GetComponent<PlayerHealth>().isDead == false)
+            {
+                anyAlive = true;
+            }
+        }
+        if(anyAlive == false)
+        {
+            currentState = GameStates.Lost;
+            UIManager.EndGameUI();
+        }
     }
 }

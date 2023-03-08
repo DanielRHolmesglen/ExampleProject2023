@@ -38,7 +38,7 @@ public class CharacterMovement : MonoBehaviour
         cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
 
-        cam = Camera.main;
+        cam = GetComponentInChildren<Camera>();
 
     }
 

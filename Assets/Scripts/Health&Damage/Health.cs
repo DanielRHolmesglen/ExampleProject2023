@@ -27,6 +27,7 @@ public class Health : MonoBehaviour
     }
     public virtual void Die()
     {
+        isDead = true;
         OnDeath.Invoke();
     }
 }
