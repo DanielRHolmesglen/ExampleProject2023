@@ -35,10 +35,13 @@ public class SimpleEnemyAI : MonoBehaviour
     {
         Debug.Log("Checking for players");
 
-        target = players[0].transform;
+        if (players[0].GetComponent<Health>().isDead) target = players[1].transform;
+        else target = players[0].transform;
 
         for (int i = 1; i < players.Count; i++)
         {
+            if (players[i].GetComponent<Health>().isDead) continue;
+
             if(Vector3.Distance(transform.position, players[i].transform.position) < Vector3.Distance(transform.position, target.position))
             {
                 Debug.Log("A new player is targeted");
