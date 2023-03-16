@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class SimpleEnemyAI : MonoBehaviour
 {
+    public List<GameObject> players;
+
     public Transform target;
     NavMeshAgent agent;
 
@@ -13,34 +14,39 @@ public class SimpleEnemyAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        InvokeRepeating("CheckForTarget", 1, 5);
+
+        foreach(PlayerData player in LevelManager.instance.players)
+        {
+            players.Add(player.gameObject);
+        }
+
+        CheckForClosestPlayer();
+
+        InvokeRepeating("CheckForClosestPlayer", 3, 3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(target != null)
         agent.SetDestination(target.position);
     }
 
-    void CheckForTarget()
+    void CheckForClosestPlayer()
     {
         Debug.Log("Checking for players");
 
-        PlayerData[] players = LevelManager.instance.players;
-        string message1 = "";
-        foreach(PlayerData player in players)
+        if (players[0].GetComponent<Health>().isDead) target = players[1].transform;
+        else target = players[0].transform;
+
+        for (int i = 1; i < players.Count; i++)
         {
-            message1 += player.name + " ";
+            if (players[i].GetComponent<Health>().isDead) continue;
+
+            if(Vector3.Distance(transform.position, players[i].transform.position) < Vector3.Distance(transform.position, target.position))
+            {
+                Debug.Log("A new player is targeted");
+                target = players[i].transform;
+            }
         }
-        Debug.Log(message1);
-        players.OrderBy(point => Vector3.Distance(transform.position, point.gameObject.transform.position)).ToArray();
-        string message2 = "";
-        foreach (PlayerData player in players)
-        {
-            message2 += player.name + " ";
-        }
-        Debug.Log(message2);
-        target = players[0].gameObject.transform;
     }
 }

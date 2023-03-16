@@ -15,6 +15,8 @@ public class Health : MonoBehaviour
 
     public virtual void TakeDamage(float damageAmount)
     {
+        if (isDead) return;
+
         Debug.Log("OUCH");
         OnDamaged.Invoke();
 
@@ -22,11 +24,12 @@ public class Health : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            Die();
+           Die();
         }
     }
     public virtual void Die()
     {
+        isDead = true;
         OnDeath.Invoke();
     }
 }
