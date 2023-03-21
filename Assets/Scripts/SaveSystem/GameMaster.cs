@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameMaster : MonoBehaviour
 {
     GameData saveData = new GameData();
@@ -22,12 +23,14 @@ public class GameMaster : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
+            saveData.FillSaveData();
             SaveSystem.instance.SaveGame(saveData);
             Debug.Log("the game has been saved");
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
             saveData = SaveSystem.instance.LoadGame();
+            saveData.FillTempList();
             Debug.Log("new data loaded");
             PrintScore();
         }
