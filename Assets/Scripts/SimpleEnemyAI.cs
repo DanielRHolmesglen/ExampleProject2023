@@ -17,7 +17,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
         foreach(PlayerData player in LevelManager.instance.players)
         {
-            players.Add(player.gameObject);
+//            players.Add(player.gameObject);
         }
 
         CheckForClosestPlayer();

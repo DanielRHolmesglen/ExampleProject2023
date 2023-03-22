@@ -69,14 +69,14 @@ public class LevelManager : MonoBehaviour
 
         foreach(PlayerData player in players)
         {
-            if (player.GetComponent<Health>().isDead)
-            {
-                SpawnPlayerOnWaveEnd(player.gameObject);
-            }
-            else
-            {
+            //if (player.GetComponent<Health>().isDead)
+            //{
+              //  SpawnPlayerOnWaveEnd(player.gameObject);
+            //}
+            //else
+            //{
                 player.wavesSurvived++;
-            }
+            //}
         }
     }
     //find and run the current wave until all enemies are dead
@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
         players[playerNumber - 1].deaths++;
 
         //get a gameobject reference to the player
-        GameObject currentPlayer = players[playerNumber -1].gameObject;
+        /*GameObject currentPlayer = players[playerNumber -1].gameObject;
 
         //deactivate components.
         currentPlayer.GetComponent<CharacterController>().enabled = false;
@@ -118,14 +118,14 @@ public class LevelManager : MonoBehaviour
         currentPlayer.GetComponent<CharacterMovement>().enabled = false;
         currentPlayer.GetComponent<PlayerAttacks>().meleeCollider.SetActive(false);
         currentPlayer.GetComponent<PlayerAttacks>().enabled = false;
-
+        */
         bool anyAlive = false;
         foreach(PlayerData player in players)
         {
-            if(player.GetComponent<PlayerHealth>().isDead == false)
+            /*if(player.GetComponent<PlayerHealth>().isDead == false)
             {
                 anyAlive = true;
-            }
+            }*/
         }
         if(anyAlive == false)
         {
