@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Manages Game State in a level, plays the appropriate waves, and manages player scoring and respawning
 /// Treat this script like the information hub for your level.
@@ -25,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     
     [Header("Players")]
-    public PlayerData[] players;
+    public GameObject[] players;
     public Transform[] playerSpawns;
 
     //list of waves
@@ -50,6 +52,11 @@ public class LevelManager : MonoBehaviour
     {
         timer.StartTimer(5f);
         currentState = GameStates.Prepping;
+
+        for(int i = 0; i < players.Length; i++)
+        {
+            players[i].GetComponentInChildren<TMP_Text>().text = GameManager.instance.currentPlayers[i].playerName;
+        }
     }
 
     // Update is called once per frame
@@ -67,15 +74,16 @@ public class LevelManager : MonoBehaviour
         currentState = GameStates.Prepping;
         timer.StartTimer(timeBetweenWaves);
 
-        foreach(PlayerData player in players)
+        foreach(GameObject player in players)
         {
             if (player.GetComponent<Health>().isDead)
             {
-                SpawnPlayerOnWaveEnd(player.gameObject);
+                SpawnPlayerOnWaveEnd(player);
             }
             else
             {
-                player.wavesSurvived++;
+                int playerNum = player.GetComponent<PlayerNumber>().playerNumber -1;
+                GameManager.instance.currentPlayers[playerNum].wavesSurvived++;
             }
         }
     }
@@ -100,16 +108,17 @@ public class LevelManager : MonoBehaviour
         {
             currentState = GameStates.Won;
             UIManager.EndGameUI();
+            Invoke("SaveResultsAndLoadScene", 5);
         }
     }
     //process score and update the other scripts
     public void PlayerDeath(int playerNumber)
     {
         //update player score
-        players[playerNumber - 1].deaths++;
+        GameManager.instance.currentPlayers[playerNumber - 1].deaths++;
 
         //get a gameobject reference to the player
-        GameObject currentPlayer = players[playerNumber -1].gameObject;
+        GameObject currentPlayer = players[playerNumber -1];
 
         //deactivate components.
         currentPlayer.GetComponent<CharacterController>().enabled = false;
@@ -120,7 +129,7 @@ public class LevelManager : MonoBehaviour
         currentPlayer.GetComponent<PlayerAttacks>().enabled = false;
 
         bool anyAlive = false;
-        foreach(PlayerData player in players)
+        foreach(GameObject player in players)
         {
             if(player.GetComponent<PlayerHealth>().isDead == false)
             {
@@ -131,9 +140,10 @@ public class LevelManager : MonoBehaviour
         {
             currentState = GameStates.Lost;
             UIManager.EndGameUI();
+            Invoke("SaveResultsAndLoadScene", 5);
         }
 
-        
+
     }
 
     void SpawnPlayerOnWaveEnd(GameObject player)
@@ -152,5 +162,11 @@ public class LevelManager : MonoBehaviour
         player.GetComponent<CharacterMovement>().enabled = true;
         player.GetComponent<PlayerAttacks>().enabled = true;
         player.GetComponentInChildren<Animator>().SetBool("Dead", false);
+    }
+    void SaveResultsAndLoadScene()
+    {
+        GameManager.instance.FillTempList();
+        GameManager.instance.FillSaveData();
+        SceneManager.LoadScene("Results");
     }
 }

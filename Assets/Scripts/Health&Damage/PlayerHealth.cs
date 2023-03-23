@@ -15,6 +15,6 @@ public class PlayerHealth : HealthWithUI
     {
         base.Die();
         anim.SetBool("Dead", true);
-        LevelManager.instance.PlayerDeath(GetComponent<PlayerData>().playerNumber);
+        LevelManager.instance.PlayerDeath(GetComponent<PlayerNumber>().playerNumber);
     }
 }

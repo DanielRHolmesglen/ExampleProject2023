@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerData
 {
     public string playerName;
-    public int playerNumber;
 
     public int wavesSurvived;
     public int kills;
