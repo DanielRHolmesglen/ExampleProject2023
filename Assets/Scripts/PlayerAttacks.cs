@@ -56,6 +56,7 @@ public class PlayerAttacks : MonoBehaviour
         GameObject currentProj = Instantiate(projectile, launchPoint.position, Quaternion.LookRotation(transform.forward));
 
         currentProj.GetComponent<Rigidbody>().AddForce((anim.transform.forward * lobSpeed) + (Vector3.up * lobLift), ForceMode.Impulse);
+        currentProj.GetComponent<PlayerAttackCollision>().playerNumber = GetComponent<PlayerNumber>().playerNumber;
 
     }
     void ActivateMeleeCollider()

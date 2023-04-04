@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5134293023101692820}
   - component: {fileID: 3427852813310861021}
-  - component: {fileID: 2114268100361849111}
   - component: {fileID: 1495490033029949809}
   - component: {fileID: 5840903033982025691}
   - component: {fileID: 8629000216940796626}
+  - component: {fileID: 8096257221687699529}
   m_Layer: 0
   m_Name: PlayerAmmo
   m_TagString: Untagged
@@ -44,37 +44,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990111030135280420}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2114268100361849111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990111030135280420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c8429047da149de833d8c975610a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
-  tags:
-  - Enemy
-  - Environment
-  OnHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1990111030135280420}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!23 &1495490033029949809
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -146,3 +115,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8096257221687699529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990111030135280420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a5af9987077465faf3179953656d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 0
+  autoDestroy: 1
+  timeTillDestruction: 5
+  damageAmount: 10
+  tags:
+  - Enemy
+  - Environment
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
