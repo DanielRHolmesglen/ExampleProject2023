@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8629000216940796626}
   - component: {fileID: 8096257221687699529}
   m_Layer: 0
-  m_Name: PlayerAmmo
+  m_Name: Player2Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f92e5a379c7e4b008e78c1407d46eb1, type: 2}
+  - {fileID: 2100000, guid: 4af260cd80cf64d70951628d3001cc3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
