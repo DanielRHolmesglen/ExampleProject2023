@@ -44,14 +44,11 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            FillTempList();
-            FillSaveData();
-        }
+       
     }
     public void FillTempList()
     {
+        Debug.Log("FILL THE SAVE LIST");
         tempScoreBoard = new List<PlayerData>();
         for (int i = 0; i < 10; i++)
         {
@@ -64,6 +61,7 @@ public class GameManager : MonoBehaviour
         }
         foreach(PlayerData player in currentPlayers)
         {
+            Debug.Log("ADD PLAYER SCORES TO LIST");
             tempScoreBoard.Add(player);
         }
     }
@@ -107,24 +105,35 @@ public class GameManager : MonoBehaviour
             FillSaveData();
         }
     }
-   /* void CheckForEmpties()
+    public void ClearAndSaveData()
     {
-        if (highScorePlayerNames.Length == 0)
+        for (int i = 0; i < 10; i++)
         {
-            highScorePlayerNames = new string[10];
+            saveData.highScorePlayerNames[i] = "";
+            saveData.highScorePlayerKills[i] = 0;
+            saveData.highScorePlayerDeaths[i] = 0;
+            saveData.highScorePlayerWaves[i] = 0;
         }
-        if (highScorePlayerDeaths.Length == 0)
-        {
-            highScorePlayerDeaths = new int[10];
-        }
-        if (highScorePlayerWaves.Length == 0)
-        {
-            highScorePlayerWaves = new int[10];
-        }
-        if (highScorePlayerKills.Length == 0)
-        {
-            highScorePlayerKills = new int[10];
-        }
+        SaveSystem.instance.SaveGame(saveData);
+    }
+    /* void CheckForEmpties()
+     {
+         if (highScorePlayerNames.Length == 0)
+         {
+             highScorePlayerNames = new string[10];
+         }
+         if (highScorePlayerDeaths.Length == 0)
+         {
+             highScorePlayerDeaths = new int[10];
+         }
+         if (highScorePlayerWaves.Length == 0)
+         {
+             highScorePlayerWaves = new int[10];
+         }
+         if (highScorePlayerKills.Length == 0)
+         {
+             highScorePlayerKills = new int[10];
+         }
 
-    }*/
+     }*/
 }

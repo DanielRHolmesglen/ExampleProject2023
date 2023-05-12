@@ -13,6 +13,10 @@ public class UIFunctions : MonoBehaviour
     {
         UIPanel.SetActive(!UIPanel.activeSelf);
     }
+    public void ClearScores()
+    {
+        GameManager.instance.ClearAndSaveData();
+    }
     public void Quit()
     {
         Application.Quit();
