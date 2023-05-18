@@ -12,6 +12,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 39a64a0ff0a8542a3841944a00877a91
   - enabled: 1
+    path: Assets/Scenes/OnlineLauncher.unity
+    guid: f3884fc14c8a447ad839ee7cb7470698
+  - enabled: 1
+    path: Assets/Scenes/CreateOrJoinRoom.unity
+    guid: 24ad65de38e58404081eec4b11daec1d
+  - enabled: 1
+    path: Assets/Scenes/WaitingForPlayers.unity
+    guid: b2041dfc57a784c228062d0f2eed5c1e
+  - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 69ad7dc57d0c8f24d971d56347af674b
   - enabled: 0
