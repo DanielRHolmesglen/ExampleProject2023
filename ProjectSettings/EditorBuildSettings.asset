@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Results.unity
     guid: 7388adc61e7134688b7c159d868c3f5b
+  - enabled: 1
+    path: Assets/Scenes/OnlineGamePlayScene.unity
+    guid: aca1c9b98589b4a4a9ac357cb3d9eb4a
   m_configObjects: {}

@@ -2130,7 +2130,7 @@ MonoBehaviour:
   messages: {fileID: 1005125727}
   numberOfPlayers: {fileID: 1545586147}
   playerName: {fileID: 1909505706}
-  levelName: LocalGamePlayScene
+  levelName: OnlineGamePlayScene
 --- !u!4 &1710940618
 Transform:
   m_ObjectHideFlags: 0

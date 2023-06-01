@@ -968,6 +968,7 @@ GameObject:
   - component: {fileID: 1425138597404968804}
   - component: {fileID: 4983005201602993438}
   - component: {fileID: 8211312151897829900}
+  - component: {fileID: 4592985898444018680}
   m_Layer: 0
   m_Name: Player1Anim
   m_TagString: Untagged
@@ -1052,6 +1053,39 @@ MonoBehaviour:
     LayerIndex: 1
   - SynchronizeType: 1
     LayerIndex: 2
+--- !u!114 &4592985898444018680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769013794714279390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &1788463944275504241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,7 +1531,7 @@ GameObject:
   - component: {fileID: 2457897564692375448}
   m_Layer: 6
   m_Name: Player1Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1509,7 +1543,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2457897564692375443}
-  m_LocalRotation: {x: -0.009442001, y: -0.8700401, z: 0.49260834, w: -0.01667637}
+  m_LocalRotation: {x: -0.0049624406, y: -0.8701558, z: 0.4926738, w: -0.008764615}
   m_LocalPosition: {x: -0.000000029802322, y: 10, z: 5.9999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1537,9 +1571,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.5
+    y: 0
     width: 1
-    height: 0.5
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1754,7 +1788,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2457897565531063560}
-  m_LocalRotation: {x: -0.009442001, y: -0.8700401, z: 0.49260834, w: -0.01667637}
+  m_LocalRotation: {x: -0.0049624406, y: -0.8701558, z: 0.4926738, w: -0.008764615}
   m_LocalPosition: {x: -0.000000029802322, y: 10, z: 5.9999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2336,13 +2370,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2457897566687693751}
   - component: {fileID: 2457897566687693750}
-  - component: {fileID: 2457897566687693749}
-  - component: {fileID: 2457897566687693744}
+  - component: {fileID: 9158655334045541255}
+  - component: {fileID: 7197189167648686646}
   - component: {fileID: 2457897566687693745}
   - component: {fileID: 2457897566687693746}
-  - component: {fileID: 2457897566687693747}
   - component: {fileID: 2878725743301985551}
   - component: {fileID: 8606385716437176337}
+  - component: {fileID: 387092810839052813}
   m_Layer: 0
   m_Name: Player1Online
   m_TagString: Player
@@ -2388,7 +2422,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.94, z: 0}
---- !u!114 &2457897566687693749
+--- !u!114 &9158655334045541255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2397,21 +2431,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2457897566687693748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ec34b1bfbdd427caf25023003a2c20, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e0181ec526d14b8fb4082be965da7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
   rotationSpeed: 0.025
   gravityForce: -9.8
   jumpForce: 1
-  left: 97
-  right: 100
-  up: 119
-  down: 115
-  jump: 32
   target: {fileID: 0}
   groundedPlayer: 0
---- !u!114 &2457897566687693744
+--- !u!114 &7197189167648686646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2420,19 +2449,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2457897566687693748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36fb9c3d979347e2abcbf378c15ad62, type: 3}
+  m_Script: {fileID: 11500000, guid: 9092b92a327154074af8f9d4240b2985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 1990111030135280420, guid: e73793dcce87c478c974fe8064d8a3ca, type: 3}
+  projectile: {fileID: 1990111030135280420, guid: e25e939e43b57483c82ba8e855262503, type: 3}
   launchPoint: {fileID: 2457897566506518386}
   lobSpeed: 10
   lobLift: 2
   meleeCollider: {fileID: 2457897566521603300}
   attackDelay: 0.2
   attackLifeTime: 1
-  ranged: 106
-  melee: 107
-  taunt: 108
 --- !u!114 &2457897566687693745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2454,7 +2480,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2457897566687693749}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -2482,19 +2508,6 @@ CapsuleCollider:
   m_Height: 1.86
   m_Direction: 1
   m_Center: {x: 0, y: 0.89, z: 0}
---- !u!114 &2457897566687693747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2457897566687693748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b687740bda9349d086ff053ff29a930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerNumber: 1
 --- !u!114 &2878725743301985551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2515,6 +2528,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8606385716437176337}
+  - {fileID: 8211312151897829900}
+  - {fileID: 4592985898444018680}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2542,7 +2557,7 @@ MonoBehaviour:
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     InterpolateOption: 1
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
@@ -2551,6 +2566,18 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &387092810839052813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2457897566687693748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68617892f22c4eba881e3481f80d448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2467024546207211553
 GameObject:
   m_ObjectHideFlags: 0
