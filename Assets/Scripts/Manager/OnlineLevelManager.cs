@@ -4,11 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 /// <summary>
 /// Manages Game State in a level, plays the appropriate waves, and manages player scoring and respawning
 /// Treat this script like the information hub for your level.
 /// </summary>
-public class OnlineLevelManager : MonoBehaviour
+public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
 {
     #region Singleton
     public static OnlineLevelManager instance;
@@ -26,7 +28,7 @@ public class OnlineLevelManager : MonoBehaviour
     }
     #endregion
 
-    
+    #region variables
     [Header("Players")]
     public GameObject[] players;
     public GameObject[] playerPrefabs;
@@ -48,8 +50,12 @@ public class OnlineLevelManager : MonoBehaviour
     public InLevelUIManager UIManager;
     PhotonView view;
 
+    //Event data
 
+    private const byte CHANGE_STATE = 2;
+    #endregion
 
+    #region game set up
     // Start is called before the first frame update
     void Start()
     {
@@ -86,6 +92,8 @@ public class OnlineLevelManager : MonoBehaviour
         }
 
     }
+    #endregion
+
     // Update is called once per frame
     void Update()
     {
@@ -96,6 +104,7 @@ public class OnlineLevelManager : MonoBehaviour
         }
     }
     //run a timer between waves for a prep time
+    #region ManageGameStates
     public void StartPrep()
     {
         currentState = GameStates.Prepping;
@@ -121,7 +130,6 @@ public class OnlineLevelManager : MonoBehaviour
         waves[currentWave].isActive = true;
         UIManager.UpdateUI();
     }
-    //Track player deaths and run game over
 
     //track waves completed and run victory
     public void EndWave()
@@ -216,4 +224,24 @@ public class OnlineLevelManager : MonoBehaviour
 
         Debug.Log(GameManager.instance.currentPlayers[playerNumber].kills);
     }
+    #endregion
+
+    #region Pun Event Methods
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+    public void OnEvent(EventData photonEvent)
+    {
+        if(photonEvent.Code == CHANGE_STATE)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            currentState = (GameStates)data[0];
+        }
+    }
+    #endregion
 }

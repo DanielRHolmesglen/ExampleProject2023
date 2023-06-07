@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTypes:
-  - {fileID: 1994135724188326016, guid: ee3d100ca108e48ce8e6533e99d7e56e, type: 3}
+  - {fileID: 1994135724188326016, guid: e48382cc655ed774a976ddd63a60f3c5, type: 3}
   spawnPoints:
   - {fileID: 1853732883}
   - {fileID: 1745394454}
@@ -624,13 +624,14 @@ MonoBehaviour:
   maxNumberOverAll: 4
   isActive: 0
   isComplete: 0
+  isOnline: 0
   timeBetweenSpawns: 1
   killed: 0
   EndWave:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+      - m_Target: {fileID: 528057295}
+        m_TargetAssemblyTypeName: OnlineLevelManager, Assembly-CSharp
         m_MethodName: EndWave
         m_Mode: 1
         m_Arguments:
@@ -2394,6 +2395,7 @@ MonoBehaviour:
   maxNumberOverAll: 8
   isActive: 0
   isComplete: 0
+  isOnline: 0
   timeBetweenSpawns: 1
   killed: 0
   EndWave:
