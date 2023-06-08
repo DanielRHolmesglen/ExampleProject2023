@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class SimpleEnemyAI : MonoBehaviour
 {
     public List<GameObject> players;
-
+    public bool isOnline;
     public Transform target;
     NavMeshAgent agent;
 
@@ -15,10 +15,21 @@ public class SimpleEnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        foreach(GameObject player in LevelManager.instance.players)
+        if (isOnline)
         {
-            players.Add(player);
+            foreach (GameObject player in OnlineLevelManager.instance.players)
+            {
+                players.Add(player);
+            }
         }
+        else
+        {
+            foreach (GameObject player in LevelManager.instance.players)
+            {
+                players.Add(player);
+            }
+        }
+        
 
         CheckForClosestPlayer();
 

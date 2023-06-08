@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
+  isOnline: 1
   target: {fileID: 0}
 --- !u!114 &7304211646631743043
 MonoBehaviour:

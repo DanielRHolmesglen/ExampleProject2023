@@ -108,6 +108,10 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     public void StartPrep()
     {
         currentState = GameStates.Prepping;
+
+        object[] data = new object[] { GameStates.Prepping };
+        PhotonNetwork.RaiseEvent(CHANGE_STATE, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+
         timer.StartTimer(timeBetweenWaves);
 
         foreach(GameObject player in players)
@@ -127,6 +131,8 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     public void BeginWave()
     {
         currentState = GameStates.InWave;
+        object[] data = new object[] { GameStates.InWave };
+        PhotonNetwork.RaiseEvent(CHANGE_STATE, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
         waves[currentWave].isActive = true;
         UIManager.UpdateUI();
     }
@@ -142,6 +148,10 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
         else
         {
             currentState = GameStates.Won;
+
+            object[] data = new object[] { GameStates.Won };
+            PhotonNetwork.RaiseEvent(CHANGE_STATE, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+
             foreach (GameObject player in players)
             {
                 if (!player.GetComponent<Health>().isDead)
@@ -184,6 +194,10 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
         {
             Debug.Log("NO PLAYERS ALIVE");
             currentState = GameStates.Lost;
+
+            object[] data = new object[] { GameStates.Lost };
+            PhotonNetwork.RaiseEvent(CHANGE_STATE, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+
             UIManager.EndGameUI();
             Invoke("SaveResultsAndLoadScene", 5);
         }
@@ -241,6 +255,7 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
         {
             object[] data = (object[])photonEvent.CustomData;
             currentState = (GameStates)data[0];
+            UIManager.UpdateUI();
         }
     }
     #endregion
