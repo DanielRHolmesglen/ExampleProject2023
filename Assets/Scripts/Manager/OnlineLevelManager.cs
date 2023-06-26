@@ -10,7 +10,7 @@ using ExitGames.Client.Photon;
 /// Manages Game State in a level, plays the appropriate waves, and manages player scoring and respawning
 /// Treat this script like the information hub for your level.
 /// </summary>
-public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
+public class OnlineLevelManager : MonoBehaviourPunCallbacks, IOnEventCallback, IInRoomCallbacks
 {
     #region Singleton
     public static OnlineLevelManager instance;
@@ -53,6 +53,7 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     //Event data
 
     private const byte CHANGE_STATE = 2;
+    private const byte UPDATE_SCORE = 3;
     #endregion
 
     #region game set up
@@ -89,6 +90,7 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
         {
             int playerNum = player.GetComponent<PhotonView>().OwnerActorNr - 1; //get the objects player number
             players[playerNum] = player;//assign the object to the correct slot
+            GameManager.instance.currentPlayers[playerNum].playerName = PhotonNetwork.PlayerList[playerNum].NickName;
         }
 
     }
@@ -107,6 +109,8 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     #region ManageGameStates
     public void StartPrep()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         currentState = GameStates.Prepping;
 
         object[] data = new object[] { GameStates.Prepping };
@@ -130,7 +134,10 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     //find and run the current wave until all enemies are dead
     public void BeginWave()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         currentState = GameStates.InWave;
+
         object[] data = new object[] { GameStates.InWave };
         PhotonNetwork.RaiseEvent(CHANGE_STATE, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
         waves[currentWave].isActive = true;
@@ -140,6 +147,7 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     //track waves completed and run victory
     public void EndWave()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         currentWave++;
         if (currentWave < waves.Length)
         {  
@@ -167,11 +175,15 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
     //process score and update the other scripts
     public void PlayerDeath(int playerNumber)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         //update player score
-        GameManager.instance.currentPlayers[playerNumber - 1].deaths++;
+        int deaths = GameManager.instance.currentPlayers[playerNumber - 1].deaths++;
 
         //get a gameobject reference to the player
         GameObject currentPlayer = players[playerNumber -1];
+
+        //convert score change and player number into data for event
+        object[] scoreData = new object[] { playerNumber - 1, deaths };
 
         //deactivate components.
         currentPlayer.GetComponent<CharacterController>().enabled = false;
@@ -207,6 +219,7 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
 
     void SpawnPlayerOnWaveEnd(GameObject player)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         //deactivate components.
         player.GetComponent<CharacterController>().enabled = true;
         player.GetComponent<Collider>().enabled = true;
@@ -232,11 +245,30 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
 
     public void IncreaseScore(int playerNumber)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         GameManager.instance.currentPlayers[playerNumber].kills++;
 
         UIManager.UpdateUI();
 
         Debug.Log(GameManager.instance.currentPlayers[playerNumber].kills);
+    }
+    public void PlayerData()
+    {
+        //make a reference to each player data
+        PlayerData p1 = GameManager.instance.currentPlayers[0];
+        PlayerData p2 = GameManager.instance.currentPlayers[1];
+
+        //convert each score into object form for raise events
+        object[] playerData = new object[]
+        {
+            p1.kills,
+            p1.deaths,
+            p1.wavesSurvived,
+            p2.kills,
+            p2.deaths,
+            p2.wavesSurvived
+        };
+        PhotonNetwork.RaiseEvent(UPDATE_SCORE, playerData, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
     #endregion
 
@@ -257,6 +289,28 @@ public class OnlineLevelManager : MonoBehaviour, IOnEventCallback
             currentState = (GameStates)data[0];
             UIManager.UpdateUI();
         }
+        if (photonEvent.Code == UPDATE_SCORE)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            PlayerData p1 = GameManager.instance.currentPlayers[0];
+            p1.kills = (int)data[0];
+            p1.deaths = (int)data[1];
+            p1.wavesSurvived = (int)data[2];
+            PlayerData p2 = GameManager.instance.currentPlayers[1];
+            p1.kills = (int)data[3];
+            p1.deaths = (int)data[4];
+            p1.wavesSurvived = (int)data[5];
+            UIManager.UpdateUI();
+        }
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        //remove the player from the list of players, freeing up its actorNumber
+        PhotonNetwork.CurrentRoom.Players.Remove(otherPlayer.ActorNumber);
+        //print a message
+        //exit the game to restart
+        
     }
     #endregion
 }

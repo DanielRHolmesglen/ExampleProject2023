@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81a5af9987077465faf3179953656d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
+  playerNumber: 2
   autoDestroy: 1
   timeTillDestruction: 5
   damageAmount: 10

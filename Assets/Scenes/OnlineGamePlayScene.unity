@@ -712,7 +712,7 @@ MonoBehaviour:
   - {fileID: 0}
   playerPrefabs:
   - {fileID: 2457897566687693748, guid: 4f4326a8da22f48869d05a23feb37cd0, type: 3}
-  - {fileID: 2457897566687693748, guid: 4f4326a8da22f48869d05a23feb37cd0, type: 3}
+  - {fileID: 2457897566687693748, guid: ee45e7fd90614441aab75aa1d53ed73e, type: 3}
   playerSpawns:
   - {fileID: 1835788381}
   - {fileID: 1310138745}
@@ -3095,7 +3095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0, z: -10}
+  m_FollowOffset: {x: 0, y: 10, z: 6}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1

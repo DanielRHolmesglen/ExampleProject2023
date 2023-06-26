@@ -19,12 +19,14 @@ public class OnlinePlayerAttacks : MonoBehaviour
     public float attackLifeTime;
 
     private PhotonView view;
+    private OnlinePool pool;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         view = GetComponent<PhotonView>();
+        pool = GetComponent<OnlinePool>();
         meleeCollider.GetComponent<PlayerAttackCollision>().playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
@@ -56,10 +58,23 @@ public class OnlinePlayerAttacks : MonoBehaviour
     }
     void Shoot()
     {
+        /*GameObject projectile = pool.ReturnObject(); //get an aobject from your pool
+        Rigidbody rb = projectile.GetComponent<Rigidbody>(); //get the rigidbody
+
+        //reset the rigidbody
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        projectile.transform.position = launchPoint.position;
+        projectile.transform.rotation = Quaternion.LookRotation(transform.forward);
+
+        projectile.SetActive(true);
+        rb.AddForce((anim.transform.forward * lobSpeed) + (Vector3.up * lobLift), ForceMode.Impulse);*/
+
         GameObject currentProj = PhotonNetwork.Instantiate(projectile.name, launchPoint.position, Quaternion.LookRotation(transform.forward));
 
         currentProj.GetComponent<Rigidbody>().AddForce((anim.transform.forward * lobSpeed) + (Vector3.up * lobLift), ForceMode.Impulse);
-        currentProj.GetComponent<PlayerAttackCollision>().playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        //currentProj.GetComponent<PlayerAttackCollision>().playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
 
     }
     [PunRPC]

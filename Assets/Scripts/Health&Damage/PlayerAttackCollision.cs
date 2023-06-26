@@ -17,11 +17,11 @@ public class PlayerAttackCollision : MonoBehaviour
 
     public UnityEvent OnHit;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         if (autoDestroy)
         {
-            Destroy(gameObject, timeTillDestruction);
+            Invoke("Deactivate", timeTillDestruction);
         }
     }
 
@@ -35,9 +35,12 @@ public class PlayerAttackCollision : MonoBehaviour
         }
         if(tags.Contains(collision.gameObject.tag) && autoDestroy)
         {
-            Destroy(gameObject);
+            Deactivate();
         }
         OnHit.Invoke();
     }
-
+    void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
 }

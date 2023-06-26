@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class SimpleEnemyAI : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class SimpleEnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (isOnline && !PhotonNetwork.IsMasterClient) return;
         agent = GetComponent<NavMeshAgent>();
 
         if (isOnline)
@@ -39,6 +41,7 @@ public class SimpleEnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isOnline && !PhotonNetwork.IsMasterClient) return;
         agent.SetDestination(target.position);
     }
 
