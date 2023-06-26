@@ -183,7 +183,7 @@ public class OnlineLevelManager : MonoBehaviourPunCallbacks, IOnEventCallback, I
         GameObject currentPlayer = players[playerNumber -1];
 
         //convert score change and player number into data for event
-        object[] scoreData = new object[] { playerNumber - 1, deaths };
+        PlayerData();
 
         //deactivate components.
         currentPlayer.GetComponent<CharacterController>().enabled = false;
@@ -248,6 +248,8 @@ public class OnlineLevelManager : MonoBehaviourPunCallbacks, IOnEventCallback, I
         if (!PhotonNetwork.IsMasterClient) return;
         GameManager.instance.currentPlayers[playerNumber].kills++;
 
+        PlayerData();
+
         UIManager.UpdateUI();
 
         Debug.Log(GameManager.instance.currentPlayers[playerNumber].kills);
@@ -297,9 +299,9 @@ public class OnlineLevelManager : MonoBehaviourPunCallbacks, IOnEventCallback, I
             p1.deaths = (int)data[1];
             p1.wavesSurvived = (int)data[2];
             PlayerData p2 = GameManager.instance.currentPlayers[1];
-            p1.kills = (int)data[3];
-            p1.deaths = (int)data[4];
-            p1.wavesSurvived = (int)data[5];
+            p2.kills = (int)data[3];
+            p2.deaths = (int)data[4];
+            p2.wavesSurvived = (int)data[5];
             UIManager.UpdateUI();
         }
     }
